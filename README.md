@@ -1,3 +1,0 @@
-# NAITEI-PHP-BATCH2-T7
-An update
-
