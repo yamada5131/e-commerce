@@ -17,4 +17,5 @@ class ProductCategory extends Model
         'modified_at',
         'deleted_at',
     ];
+
 }
