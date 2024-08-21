@@ -42,7 +42,7 @@ class UserController extends Controller
         $user->telephone = $request->telephone;
         $user->is_admin = false;
         $user->save();
-        return redirect('/users');
+        return redirect('/admin');
     }
 
     /**
@@ -73,7 +73,7 @@ class UserController extends Controller
                 'username' => $request->username,
                 'telephone' => $request->telephone,
             ]);
-        return redirect('/users');
+        return redirect('/admin');
     }
 
     /**
@@ -83,6 +83,6 @@ class UserController extends Controller
     {
         $user->delete();
 
-        return redirect('/users');
+        return redirect('/admin');
     }
 }
