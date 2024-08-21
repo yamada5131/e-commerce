@@ -7,33 +7,153 @@ use App\Http\Controllers\CategoryController;
 
 // Rest of the code...
 
+
+use App\Http\Controllers\CategoryController;
+use Illuminate\Http\Request;
+
+// Rest of the code...
+
+
 // Simulated product data
+// Simulated product data with categories
 $products = [
     1 => [
         'name' => 'Cup',
         'description' => 'Beautiful and elegant cup.',
-        'price' => '$15.00',
+        'price' => 15.00,
         'rating' => 4,
         'ratings_count' => 150,
+        'category' => 'Kitchen',
         'image' => 'https://plus.unsplash.com/premium_photo-1668972393852-4c1adf9687c3?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y3VwfGVufDB8fDB8fHww',
     ],
     2 => [
         'name' => 'Hanger',
         'description' => 'Stylish and modern hanger.',
-        'price' => '$12.00',
+        'price' => 12.00,
         'rating' => 5,
         'ratings_count' => 200,
+        'category' => 'Furniture',
         'image' => 'https://plus.unsplash.com/premium_photo-1677838847509-0828c90e2848?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aGFuZ2VyfGVufDB8fDB8fHww',
     ],
     3 => [
         'name' => 'Fan',
         'description' => 'Cool breeze with modern design.',
-        'price' => '$25.00',
+        'price' => 25.00,
         'rating' => 3,
         'ratings_count' => 85,
+        'category' => 'Electronics',
         'image' => 'https://images.unsplash.com/photo-1528293064916-02c0435e416d?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8N3x8ZmFufGVufDB8fDB8fHww',
     ],
+    4 => [
+        'name' => 'Sofa',
+        'description' => 'Comfortable and modern sofa.',
+        'price' => 400.00,
+        'rating' => 5,
+        'ratings_count' => 230,
+        'category' => 'Furniture',
+        'image' => 'https://plus.unsplash.com/premium_photo-1681449856688-2abd99ab5a73?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8c29mYXxlbnwwfHwwfHx8MA%3D%3D',
+    ],
+    5 => [
+        'name' => 'Laptop',
+        'description' => 'High-performance laptop for work and gaming.',
+        'price' => 1200.00,
+        'rating' => 4,
+        'ratings_count' => 310,
+        'category' => 'Electronics',
+        'image' => 'https://images.unsplash.com/photo-1496181133206-80ce9b88a853?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NHx8bGFwdG9wfGVufDB8fDB8fHww',
+    ],
+    6 => [
+        'name' => 'Table Lamp',
+        'description' => 'Modern and stylish table lamp.',
+        'price' => 45.00,
+        'rating' => 4,
+        'ratings_count' => 50,
+        'category' => 'Furniture',
+        'image' => 'https://plus.unsplash.com/premium_photo-1681412205156-bb506a4ea970?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8dGFibGUlMjBsYW1wfGVufDB8fDB8fHww',
+    ],
+    7 => [
+        'name' => 'Smartphone',
+        'description' => 'Latest model with top-notch features.',
+        'price' => 899.00,
+        'rating' => 5,
+        'ratings_count' => 500,
+        'category' => 'Electronics',
+        'image' => 'https://images.unsplash.com/photo-1720048171731-15b3d9d5473f?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDF8MHxzZWFyY2h8MXx8c21hcnRwaG9uZXxlbnwwfHwwfHx8MA%3D%3D',
+    ],
+    8 => [
+        'name' => 'Microwave',
+        'description' => 'Quick and easy cooking with this microwave.',
+        'price' => 200.00,
+        'rating' => 4,
+        'ratings_count' => 190,
+        'category' => 'Kitchen',
+        'image' => 'https://images.unsplash.com/photo-1693786229416-2dd310137f18?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bWljcm93YXZlfGVufDB8fDB8fHww',
+    ],
+    9 => [
+        'name' => 'Dining Table',
+        'description' => 'Elegant wooden dining table.',
+        'price' => 650.00,
+        'rating' => 5,
+        'ratings_count' => 120,
+        'category' => 'Furniture',
+        'image' => 'https://plus.unsplash.com/premium_photo-1675744019321-f90d6d719da7?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8ZGluaW5nJTIwdGFibGV8ZW58MHx8MHx8fDA%3D',
+    ],
+    10 => [
+        'name' => 'Headphones',
+        'description' => 'Noise-cancelling over-ear headphones.',
+        'price' => 199.00,
+        'rating' => 4,
+        'ratings_count' => 340,
+        'category' => 'Electronics',
+        'image' => 'https://plus.unsplash.com/premium_photo-1679513691474-73102089c117?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8aGVhZHBob25lfGVufDB8fDB8fHww',
+    ],
+    11 => [
+        'name' => 'Blender',
+        'description' => 'Powerful and efficient blender.',
+        'price' => 90.00,
+        'rating' => 4,
+        'ratings_count' => 210,
+        'category' => 'Kitchen',
+        'image' => 'https://plus.unsplash.com/premium_photo-1663853294058-3f85f18a4bed?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8YmxlbmRlcnxlbnwwfHwwfHx8MA%3D%3D',
+    ],
+    12 => [
+        'name' => 'Desk Chair',
+        'description' => 'Ergonomic desk chair for long working hours.',
+        'price' => 250.00,
+        'rating' => 5,
+        'ratings_count' => 175,
+        'category' => 'Furniture',
+        'image' => 'https://plus.unsplash.com/premium_photo-1664699099351-4364a337288c?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8NXx8ZGVzayUyMGNoYWlyfGVufDB8fDB8fHww',
+    ],
+    13 => [
+        'name' => 'Coffee Maker',
+        'description' => 'Brew your perfect cup of coffee every morning.',
+        'price' => 120.00,
+        'rating' => 5,
+        'ratings_count' => 130,
+        'category' => 'Kitchen',
+        'image' => 'https://plus.unsplash.com/premium_photo-1663011334275-4201e7b18921?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8Y29mZmVlJTIwbWFrZXJ8ZW58MHx8MHx8fDA%3D',
+    ],
+    14 => [
+        'name' => 'Refrigerator',
+        'description' => 'Spacious and energy-efficient refrigerator.',
+        'price' => 1500.00,
+        'rating' => 4,
+        'ratings_count' => 90,
+        'category' => 'Kitchen',
+        'image' => 'https://images.unsplash.com/photo-1536353284924-9220c464e262?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8Mnx8ZnJpZGdlfGVufDB8fDB8fHww',
+    ],
+    15 => [
+        'name' => 'TV',
+        'description' => 'Large screen TV with 4K resolution.',
+        'price' => 1000.00,
+        'rating' => 4,
+        'ratings_count' => 330,
+        'category' => 'Electronics',
+        'image' => 'https://plus.unsplash.com/premium_photo-1681236323432-3df82be0c1b0?w=600&auto=format&fit=crop&q=60&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8MXx8VFZ8ZW58MHx8MHx8fDA%3D',
+    ],
 ];
+
 
 // Simulated feedback data
 $feedbacks = [
@@ -52,10 +172,62 @@ $feedbacks = [
 ];
 
 // Dashboard route with authentication middleware
-Route::get('/dashboard', function () use ($products) {
+Route::get('/dashboard', function (Request $request) use ($products) {
+    // Get sorting and filtering inputs
+    $sortAlphabet = $request->input('sort-alphabet');
+    $sortPrice = $request->input('sort-price');
+    $sortRating = $request->input('sort-rating');
+    $filterCategory = $request->input('category');
+
+    // Check if multiple sorting options are selected at once
+    $sortingOptionsSelected = array_filter([$sortAlphabet, $sortPrice, $sortRating]);
+    if (count($sortingOptionsSelected) > 1) {
+        // Redirect back with an error message
+        return redirect()->route('dashboard')->with('error', 'Please select only one sorting option at a time.');
+    }
+
+    // Filter by category
+    if ($filterCategory) {
+        $products = array_filter($products, function ($product) use ($filterCategory) {
+            return $product['category'] === $filterCategory;
+        });
+    }
+
+    // Sort by alphabet
+    if ($sortAlphabet === 'az') {
+        uasort($products, function ($a, $b) {
+            return strcmp($a['name'], $b['name']);
+        });
+    } elseif ($sortAlphabet === 'za') {
+        uasort($products, function ($a, $b) {
+            return strcmp($b['name'], $a['name']);
+        });
+    }
+
+    // Sort by price
+    if ($sortPrice === 'low-high') {
+        uasort($products, function ($a, $b) {
+            return $a['price'] <=> $b['price'];
+        });
+    } elseif ($sortPrice === 'high-low') {
+        uasort($products, function ($a, $b) {
+            return $b['price'] <=> $a['price'];
+        });
+    }
+
+    // Sort by rating
+    if ($sortRating === 'low-high') {
+        uasort($products, function ($a, $b) {
+            return $a['rating'] <=> $b['rating'];
+        });
+    } elseif ($sortRating === 'high-low') {
+        uasort($products, function ($a, $b) {
+            return $b['rating'] <=> $a['rating'];
+        });
+    }
+
     return view('dashboard', ['products' => $products]);
 })->middleware(['auth', 'verified'])->name('dashboard');
-
 // Route to display individual product details with feedback
 Route::get('/product/{id}', function ($id) use ($products, $feedbacks) {
     // Check if the product exists
