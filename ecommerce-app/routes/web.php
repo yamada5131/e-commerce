@@ -3,6 +3,9 @@
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\CategoryController;
+
+// Rest of the code...
 
 // Simulated product data
 $products = [
@@ -73,12 +76,23 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::get('/users', [UserController::class, 'index'])->name('users.index');
-Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
-Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
-Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
-Route::post('/users', [UserController::class, 'store'])->name('users.store');
-Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
-Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+Route::middleware(['auth'])->group(function (){
+    Route::get('/users', [UserController::class, 'index'])->name('users.index');
+    Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
+    Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
+    Route::get('/users/edit/{user}', [UserController::class, 'edit'])->name('users.edit');
+    Route::post('/users', [UserController::class, 'store'])->name('users.store');
+    Route::put('/users/{user}', [UserController::class, 'update'])->name('users.update');
+    Route::delete('/users/{user}', [UserController::class, 'destroy'])->name('users.destroy');
+});
+
+Route::middleware(['auth', 'is_admin'])->prefix('admin')->group(function () {
+    Route::get('/categories', [CategoryController::class, 'index'])->name('categories.index');
+    Route::get('/categories/create', [CategoryController::class, 'create'])->name('categories.create');
+    Route::post('/categories', [CategoryController::class, 'store'])->name('categories.store');
+    Route::get('/categories/{id}/edit', [CategoryController::class, 'edit'])->name('categories.edit');
+    Route::put('/categories/{id}', [CategoryController::class, 'update'])->name('categories.update');
+    Route::delete('/categories/{id}', [CategoryController::class, 'destroy'])->name('categories.destroy');
+});
 
 require __DIR__.'/auth.php';
