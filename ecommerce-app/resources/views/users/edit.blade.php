@@ -1,13 +1,18 @@
-<x-app-layout>
-    <x-slot name="header">
-        <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
-            {{ __('User list') }}
-        </h2>
-    </x-slot>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    @vite('resources/css/app.css') <!-- Tailwind CSS -->
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation Bar -->
+    @include('layouts.adminNavigation')
 
     <div class="py-12">
         <div class="max-w-7xl mx-auto sm:px-6 lg:px-8">
-            <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg">
+            <div class="bg-white overflow-hidden shadow-sm sm:rounded-lg">
                 <div class="p-6 text-gray-900 dark:text-gray-100">
                     {{ __("User edit") }}
                 </div>
@@ -16,7 +21,7 @@
                 @csrf
                 @method('PUT')
                 <div class="mt-4">
-                    <x-input-label for="first_name" :value="__('First name')" />
+                    <x-input-label for="first_name" :value="__('First name')"/>
                     <x-text-input id="name" class="block mt-1 w-full"
                         type="text"
                         name="first_name"
@@ -53,5 +58,5 @@
             </form>
         </div>
     </div>
-</x-app-layout>
-
+</body>
+</html>

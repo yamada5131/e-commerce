@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\CategoryController;
 
@@ -74,15 +75,9 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
-});
-Route::middleware(['auth'])->group(function () {
     Route::get('/admin', function () {
         // Dummy data for the admin view
-        $users = [
-            ['id' => 1, 'name' => 'John Doe', 'email' => 'john@example.com'],
-            ['id' => 2, 'name' => 'Jane Smith', 'email' => 'jane@example.com'],
-            ['id' => 3, 'name' => 'Sam Green', 'email' => 'sam@example.com'],
-        ];
+        $users = User::all();
 
         $categories = [
             1 => ['id' => 1, 'name' => 'Electronics'],
@@ -98,7 +93,6 @@ Route::middleware(['auth'])->group(function () {
         return view('admin', ['users' => $users, 'categories' => $categories, 'products' => $products]);
     })->name('admin.dashboard');
 });
-
 
 Route::middleware(['auth'])->group(function (){
     Route::get('/users', [UserController::class, 'index'])->name('users.index');

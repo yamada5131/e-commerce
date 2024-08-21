@@ -1,4 +1,15 @@
-<x-app-layout>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin Dashboard</title>
+    @vite('resources/css/app.css') <!-- Tailwind CSS -->
+</head>
+<body class="bg-gray-100">
+    <!-- Navigation Bar -->
+    @include('layouts.adminNavigation')
+
     <x-slot name="header">
         <h2 class="font-semibold text-xl text-gray-800 dark:text-gray-200 leading-tight">
             {{ __('User list') }}
@@ -53,5 +64,5 @@
             </form>
         </div>
     </div>
-</x-app-layout>
-
+</body>
+</html>

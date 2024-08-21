@@ -8,21 +8,7 @@
 </head>
 <body class="bg-gray-100">
     <!-- Navigation Bar -->
-    <nav class="bg-white shadow">
-        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="flex justify-between h-16">
-                <div class="flex">
-                    <a href="{{ route('dashboard') }}" class="flex-shrink-0 text-xl font-bold text-gray-800">My Shop</a>
-                </div>
-                <div class="flex items-center">
-                    <form method="POST" action="{{ route('logout') }}">
-                        @csrf
-                        <button type="submit" class="ml-4 text-gray-500 hover:text-gray-700">Logout</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </nav>
+    @include('layouts.adminNavigation')
 
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <div class="bg-white p-6 rounded-lg shadow">
@@ -35,7 +21,9 @@
             <!-- Users Table -->
             <div id="users-table" class="hidden">
                 <h2 class="text-2xl font-bold mb-4">Users</h2>
-                <button class="mb-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-700">Create User</button>
+                <a href="{{ route('users.create') }}">
+                    <button class="mb-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-700">Create User</button>
+                </a>
                 <table class="min-w-full bg-white">
                     <thead class="bg-gray-800 text-white">
                         <tr>
@@ -49,11 +37,17 @@
                         @foreach ($users as $user)
                             <tr>
                                 <td class="text-center py-2">{{ $user['id'] }}</td>
-                                <td class="text-center py-2">{{ $user['name'] }}</td>
+                                <td class="text-center py-2">{{ $user['fullname'] }}</td>
                                 <td class="text-center py-2">{{ $user['email'] }}</td>
-                                <td class="text-center py-2">
-                                    <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Edit</button>
-                                    <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Delete</button>
+                                <td class="text-center py-2 flex justify-center gap-2">
+                                    <a href="{{ route('users.edit', ['user' => $user->id]) }}">
+                                        <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Edit</button>
+                                    </a>
+                                    <form action="{{ route('users.destroy', ['user' => $user->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Delete</button>
+                                    </form>
                                 </td>
                             </tr>
                         @endforeach
