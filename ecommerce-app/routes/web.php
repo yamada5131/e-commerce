@@ -2,6 +2,8 @@
 
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\UserReviewController;
+use App\Http\Middleware\CheckOwner;
 use App\Models\User;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\ProductController;
@@ -69,4 +71,14 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
 Route::get('/products', [CategoryController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
-require __DIR__.'/auth.php';
+Route::middleware(['auth'])->group(function () {
+    Route::get('/review/create', [UserReviewController::class, 'create'])->name('review.create');
+    Route::post('/review', [UserReviewController::class, 'store'])->name('review.store');
+    Route::middleware([CheckOwner::class])->group(function () {
+        Route::get('review/edit/{id}', [UserReviewController::class, 'edit'])->name('review.edit');
+        Route::put('/review/{id}', [UserReviewController::class, 'update'])->name('review.update');
+        Route::delete('/review/{id}', [UserReviewController::class, 'destroy'])->name('review.destroy');
+    });
+});
+
+require __DIR__ . '/auth.php';
