@@ -7,10 +7,8 @@ use App\Http\Requests\RegisterRequest;
 use App\Models\User;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
-use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
-use Illuminate\Validation\Rules;
 use Illuminate\View\View;
 
 class RegisteredUserController extends Controller
@@ -31,6 +29,7 @@ class RegisteredUserController extends Controller
     public function store(RegisterRequest $request): RedirectResponse
     {
         $request->authorize();
+        $imageUrl = $this->storeImage($request);
 
         $user = new User();
         $user->first_name = $request->first_name;
@@ -40,6 +39,7 @@ class RegisteredUserController extends Controller
         $user->password = Hash::make($request->password);
         $user->telephone = $request->telephone;
         $user->is_admin = false;
+        $user->photo = $imageUrl;
         $user->save();
 
         event(new Registered($user));
@@ -47,5 +47,11 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(route('dashboard', absolute: false));
+    }
+
+    protected function storeImage(RegisterRequest $request)
+    {
+        $path = $request->file('photo')->store('public/profile');
+        return substr($path, strlen('public/'));
     }
 }
