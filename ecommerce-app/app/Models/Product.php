@@ -3,17 +3,18 @@
 namespace App\Models;
 
 use Illuminate\Database\Eloquent\Casts\Attribute;
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
-
-use Illuminate\Database\Eloquent\Relations\HasMany;
 use Illuminate\Database\Eloquent\Relations\HasManyThrough;
+use Illuminate\Support\Str;
 
 class Product extends Model
 {
     use HasFactory;
+
+    public $incrementing = false;
 
     protected $fillable = [
         'name',
@@ -24,9 +25,14 @@ class Product extends Model
         'price',
     ];
 
-    protected $casts = [
-        'id' => 'string'
-    ];
+    protected $keyType = 'string';
+
+    public static function booted(): void
+    {
+        static::creating(function (Product $product) {
+            $product->id = Str::uuid();
+        });
+    }
 
     public function category(): BelongsTo
     {
@@ -35,7 +41,7 @@ class Product extends Model
 
     public function carts(): BelongsToMany
     {
-        return $this->belongsToMany(ShoppingCart::class, "shopping_cart_items", 'product_id', 'shopping_cart_id');
+        return $this->belongsToMany(ShoppingCart::class, 'shopping_cart_items', 'product_id', 'shopping_cart_id');
     }
 
     public function orderItems(): BelongsToMany
@@ -51,7 +57,7 @@ class Product extends Model
     public function rating(): Attribute
     {
         return Attribute::make(
-            get: fn($value) => $this->attributes['user_reviews_avg_rating'] ? 
+            get: fn ($value) => $this->attributes['user_reviews_avg_rating'] ?
                 number_format($this->attributes['user_reviews_avg_rating'], 1) : 0,
         );
     }
@@ -59,16 +65,12 @@ class Product extends Model
     public function trendRating(): Attribute
     {
         return Attribute::make(
-            get: function ($value)
-            {
+            get: function ($value) {
                 $avgRating = $this->attributes['user_reviews_avg_rating'] ? $this->attributes['user_reviews_avg_rating'] : 0;
                 $count = $this->attributes['user_reviews_count'];
+
                 return (2.4 * 2 + $avgRating * $count) / (2 + $count);
             }
         );
     }
 }
-
-
-
-
