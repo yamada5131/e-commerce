@@ -58,7 +58,9 @@
             <!-- Products Table -->
             <div id="products-table" class="hidden">
                 <h2 class="text-2xl font-bold mb-4">Products</h2>
+                <a href="{{ route('products.create') }}">
                 <button class="mb-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-700">Create Product</button>
+                </a>
                 <table class="min-w-full bg-white">
                     <thead class="bg-gray-800 text-white">
                         <tr>
@@ -77,8 +79,17 @@
                                 <td class="text-center py-2">{{ $product->price }}</td>
                                 <td class="text-center py-2">{{ $product->category->name }}</td>
                                 <td class="text-center py-2">
-                                    <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Edit</button>
-                                    <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Delete</button>
+                                    <div class="flex justify-center gap-2">
+                                    <a href="{{ route('products.edit', ['product' => $product->id]) }}">
+                                        <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Edit</button>
+                                    </a>
+
+                                    <form action="{{ route('products.destroy', ['product' => $product->id]) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Delete</button>
+                                    </form>    
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -89,7 +100,9 @@
             <!-- Categories Table -->
             <div id="categories-table" class="hidden">
                 <h2 class="text-2xl font-bold mb-4">Categories</h2>
+                <a href="{{ route('categories.create') }}">
                 <button class="mb-4 px-4 py-2 bg-black text-white rounded-lg hover:bg-gray-700">Create Category</button>
+                </a>
                 <table class="min-w-full bg-white">
                     <thead class="bg-gray-800 text-white">
                         <tr>
@@ -104,8 +117,17 @@
                                 <td class="text-center py-2">{{ $category['id'] }}</td>
                                 <td class="text-center py-2">{{ $category['name'] }}</td>
                                 <td class="text-center py-2">
-                                    <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Edit</button>
-                                    <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Delete</button>
+                                    <div class="flex justify-center gap-2">
+                                    <a href="{{ route('categories.edit', $category->id) }}">
+                                        <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Edit</button>
+                                    </a>
+
+                                    <form action="{{ route('categories.destroy', $category->id) }}" method="post">
+                                        @csrf
+                                        @method('DELETE')
+                                        <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Delete</button>
+                                    </form>
+                                    </div>
                                 </td>
                             </tr>
                         @endforeach
@@ -134,9 +156,6 @@
             document.getElementById('products-table').style.display = 'none';
             document.getElementById('categories-table').style.display = 'block';
         });
-
-        // Show the products table by default
-        document.getElementById('products-table').style.display = 'block';
     </script>
 </body>
 </html>
