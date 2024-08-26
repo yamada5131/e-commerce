@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Dashboard</title>
     @vite('resources/css/app.css') <!-- Tailwind CSS -->
 </head>
+
 <body class="bg-gray-100 flex flex-col min-h-screen">
 
     <!-- Navigation Bar -->
@@ -24,11 +26,12 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
         <form method="GET" action="{{ route('dashboard.index') }}" class="bg-white p-6 rounded-lg shadow">
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                
+
                 <!-- Sort by Alphabet -->
                 <div>
                     <label for="sort-alphabet" class="block text-gray-700">Sort by Alphabet</label>
-                    <select name="sort-alphabet" id="sort-alphabet" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select name="sort-alphabet" id="sort-alphabet"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="">Select</option>
                         <option value="az" {{ request('sort-alphabet') == 'az' ? 'selected' : '' }}>A-Z</option>
                         <option value="za" {{ request('sort-alphabet') == 'za' ? 'selected' : '' }}>Z-A</option>
@@ -38,37 +41,47 @@
                 <!-- Sort by Price -->
                 <div>
                     <label for="sort-price" class="block text-gray-700">Sort by Price</label>
-                    <select name="sort-price" id="sort-price" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select name="sort-price" id="sort-price"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="">Select</option>
-                        <option value="low-high" {{ request('sort-price') == 'low-high' ? 'selected' : '' }}>Lowest to Highest</option>
-                        <option value="high-low" {{ request('sort-price') == 'high-low' ? 'selected' : '' }}>Highest to Lowest</option>
+                        <option value="low-high" {{ request('sort-price') == 'low-high' ? 'selected' : '' }}>Lowest to
+                            Highest</option>
+                        <option value="high-low" {{ request('sort-price') == 'high-low' ? 'selected' : '' }}>Highest to
+                            Lowest</option>
                     </select>
                 </div>
 
                 <!-- Sort by Rating -->
                 <div>
                     <label for="sort-rating" class="block text-gray-700">Sort by Rating</label>
-                    <select name="sort-rating" id="sort-rating" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select name="sort-rating" id="sort-rating"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="">Select</option>
-                        <option value="low-high" {{ request('sort-rating') == 'low-high' ? 'selected' : '' }}>Lowest to Highest</option>
-                        <option value="high-low" {{ request('sort-rating') == 'high-low' ? 'selected' : '' }}>Highest to Lowest</option>
+                        <option value="low-high" {{ request('sort-rating') == 'low-high' ? 'selected' : '' }}>Lowest to
+                            Highest</option>
+                        <option value="high-low" {{ request('sort-rating') == 'high-low' ? 'selected' : '' }}>Highest to
+                            Lowest</option>
                     </select>
                 </div>
 
                 <!-- Filter by Category (Hardcoded) -->
                 <div>
                     <label for="category" class="block text-gray-700">Filter by Category</label>
-                    <select name="category" id="category" class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
+                    <select name="category" id="category"
+                        class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm">
                         <option value="">All Categories</option>
                         <option value="Kitchen" {{ request('category') == 'Kitchen' ? 'selected' : '' }}>Kitchen</option>
-                        <option value="Furniture" {{ request('category') == 'Furniture' ? 'selected' : '' }}>Furniture</option>
-                        <option value="Electronics" {{ request('category') == 'Electronics' ? 'selected' : '' }}>Electronics</option>
+                        <option value="Furniture" {{ request('category') == 'Furniture' ? 'selected' : '' }}>Furniture
+                        </option>
+                        <option value="Electronics" {{ request('category') == 'Electronics' ? 'selected' : '' }}>
+                            Electronics</option>
                     </select>
                 </div>
 
             </div>
             <div class="mt-6 text-right">
-                <button type="submit" class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
+                <button type="submit"
+                    class="inline-flex justify-center py-2 px-4 border border-transparent shadow-sm text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500">
                     Apply Filters
                 </button>
             </div>
@@ -139,4 +152,9 @@
     </footer>
 
 </body>
+
 </html>
+
+
+
+
