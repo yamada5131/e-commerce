@@ -7,6 +7,9 @@ use App\Models\Product;
 use App\Http\Requests\ProductRequest;
 use App\Models\ProductCategory;
 use App\Models\UserReview;
+use App\Models\ViewedProduct;
+use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Str;
 
 class ProductController extends Controller
 {
@@ -18,10 +21,17 @@ class ProductController extends Controller
 
     public function show(Product $product)
     {
-        $userReviews = UserReview::all();
+        $userReviews = UserReview::withWhereHas('orderItem', function ($query) use ($product){
+            $query->where('product_id', $product->id);
+        })->get();
+        $userReviewCount = $userReviews->count();
+        $userReviewAverage = $userReviews->avg('rating');
+        
         return view('products.show', [
             'product' => $product,
             'userReviews' => $userReviews,
+            'userReviewCount' => $userReviewCount,
+            'userReviewAverage' => $userReviewAverage,
         ]);
     }
 

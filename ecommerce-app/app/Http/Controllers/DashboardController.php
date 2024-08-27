@@ -11,7 +11,9 @@ class DashboardController extends Controller
 {
     public function index(Request $request)
     {
-        $products = Product::all();
+        $products = Product::with('userReviews')
+            ->withAvg('userReviews', 'rating')
+            ->withCount('userReviews');
 
         $sortAlphabet = $request->input('sort-alphabet');
         $sortPrice = $request->input('sort-price');
@@ -28,36 +30,37 @@ class DashboardController extends Controller
 
         // Filter by category
         if ($filterCategory) {
-            $products = DB::table('products')->where('product_category_id', $filterCategory)->get();
+            $products = $products->where('product_category_id', $filterCategory);
         }
 
         if ($search)
         {
-            $products = DB::table('products')->where('name', 'LIKE', '%' . $search . '%')->get();
+            $products = $products->where('name', 'LIKE', '%' . $search . '%');
         }
         
         switch (true) {
             case $sortAlphabet === 'az':
-                $products = Product::orderBy('name', 'ASC')->get();
+                $products = $products->orderBy('name', 'ASC');
                 break;
             case $sortAlphabet === 'za':
-                $products = Product::orderBy('name', 'DESC')->get();
+                $products = $products->orderBy('name', 'DESC');
 
                 break;
             case $sortPrice === 'low-high':
-                $products = Product::orderBy('price', 'ASC')->get();
+                $products = $products->orderBy('price', 'ASC');
                 break;
             case $sortPrice === 'high-low':
-                $products = Product::orderBy('price', 'DESC')->get();
+                $products = $products->orderBy('price', 'DESC');
                 break;
-            // them truong rating khi lay data sp
-            // case $sortRating === 'low-high':
-            //     $query->orderBy('rating', 'asc');
-            //     break;
-            // case $sortRating === 'high-low':
-            //     $query->orderBy('rating', 'desc');
-            //     break;
+            case $sortRating === 'low-high':
+                $products = $products->orderBy('user_reviews_avg_rating', 'asc');
+                break;
+            case $sortRating === 'high-low':
+                $products = $products->orderBy('user_reviews_avg_rating', 'desc');
+                break;
         }
+
+        $products = $products->get();
 
         return view('dashboard', [
             'products' => $products,
