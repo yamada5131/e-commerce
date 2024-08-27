@@ -2,9 +2,11 @@
 
 namespace App\Http\Controllers;
 
-use App\Models\ShoppingCartItem;
 use Str;
+
 use App\Models\ShoppingCart;
+use App\Models\ShoppingCartItem;
+
 use Illuminate\Http\Request;
 
 class CartController extends Controller
@@ -110,3 +112,9 @@ class CartController extends Controller
         return redirect("dashboard.index")->with("success", "Clear cart successfully!");
     }
 }
+
+
+
+
+
+
