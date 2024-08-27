@@ -64,12 +64,8 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/products', [CategoryController::class, 'store'])->name('products.store');
     Route::get('/products/{product}/edit', [CategoryController::class, 'edit'])->name('products.edit');
     Route::put('/products/{product}', [CategoryController::class, 'update'])->name('products.update');
-    Route::delete('/products/{product}', [CategoryController::class, 'destroy'])->name('products.destroy');
-    // Route::resource('products', ProductController::class);   
+    Route::delete('/products/{product}', [CategoryController::class, 'destroy'])->name('products.destroy');  
 });
-
-Route::get('/products', [CategoryController::class, 'index'])->name('products.index');
-Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 Route::middleware(['auth'])->group(function () {
     Route::get('/review/create', [UserReviewController::class, 'create'])->name('review.create');
@@ -81,4 +77,7 @@ Route::middleware(['auth'])->group(function () {
     });
 });
 
-require __DIR__ . '/auth.php';
+Route::get('/products', [CategoryController::class, 'index'])->name('products.index');
+Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
+
+require __DIR__.'/auth.php';
