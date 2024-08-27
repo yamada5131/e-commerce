@@ -18,7 +18,8 @@ class HomeController extends Controller
         $products = Product::with('userReviews')
             ->withAvg('userReviews', 'rating')
             ->withCount('userReviews')
-            ->get();
+            ->get()
+            ->sortByDesc(['trendRating']);
 
         return view('home', [
             'user' => Auth::user(),

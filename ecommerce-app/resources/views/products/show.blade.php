@@ -17,15 +17,15 @@
     <div class="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8 flex flex-col lg:flex-row gap-8">
         <!-- Product Image -->
         <div class="w-full lg:w-1/2">
-            <img src="{{ $product['image_url'] }}" alt="{{ $product['name'] }}"
+            <img src="{{ $product->image_url }}" alt="{{ $product->name }}"
                 class="w-full h-full object-cover rounded-lg shadow-lg">
         </div>
 
         <!-- Product Info -->
         <div class="w-full lg:w-1/2">
-            <h1 class="text-3xl font-bold text-gray-800">{{ $product['name'] }}</h1>
-            <p class="mt-4 text-gray-600">{{ $product['description'] }}</p>
-            <p class="mt-4 text-2xl font-semibold text-gray-900">${{ $product['price'] }}</p>
+            <h1 class="text-3xl font-bold text-gray-800">{{ $product->name }}</h1>
+            <p class="mt-4 text-gray-600">{{ $product->description }}</p>
+            <p class="mt-4 text-2xl font-semibold text-gray-900">${{ $product->price }}</p>
 
             <div class="mt-4 flex items-center">
                 <!-- Product Rating -->
@@ -36,14 +36,14 @@
                             d="m4.178 20.801 6.758-4.91 6.756 4.91-2.58-7.946 6.758-4.91h-8.352L10.936 0 8.354 7.945H0l6.758 4.91-2.58 7.946z" />
                     </svg>
                 @endfor
-                @for ($i = $userReviewAverage; $i < 5; $i++)
+                @for ($i = floor($userReviewAverage); $i < 5; $i++)
                     <svg xmlns="http://www.w3.org/2000/svg" width="21.87" height="20.801"
                         class="text-gray-300 fill-current">
                         <path
                             d="m4.178 20.801 6.758-4.91 6.756 4.91-2.58-7.946 6.758-4.91h-8.352L10.936 0 8.354 7.945H0l6.758 4.91-2.58 7.946z" />
                     </svg>
                 @endfor
-                <span class="ml-2 text-gray-600">{{ $userReviewAverage ? $userReviewAverage : 0 }} stars</span>
+                <span class="ml-2 text-gray-600">{{ $userReviewAverage }} stars</span>
                 <span class="ml-2 text-gray-600">({{ $userReviewCount }} reviews)</span>
             </div>
         </div>
@@ -143,4 +143,3 @@
 </body>
 
 </html>
-

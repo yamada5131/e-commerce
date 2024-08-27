@@ -6,8 +6,6 @@ use App\Models\UserReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-use Str;
-
 class UserReviewController extends Controller
 {
     /**
