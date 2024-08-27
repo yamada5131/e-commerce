@@ -7,6 +7,8 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\HasManyThrough;
 
 class Product extends Model
 {
@@ -33,5 +35,15 @@ class Product extends Model
     public function carts(): BelongsToMany
     {
         return $this->belongsToMany(ShoppingCart::class, "shopping_cart_items", 'product_id', 'shopping_cart_id');
+    }
+
+    public function orderItems(): BelongsToMany
+    {
+        return $this->belongsToMany(OrderItem::class);
+    }
+
+    public function userReviews(): HasManyThrough
+    {
+        return $this->hasManyThrough(UserReview::class, OrderItem::class);
     }
 }

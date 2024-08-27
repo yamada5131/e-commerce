@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Product;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 
@@ -12,8 +13,16 @@ class HomeController extends Controller
 
     }
     
-    public function show()
+    public function index()
     {
-        return view('home')->with('user', Auth::user());
+        $products = Product::with('userReviews')
+            ->withAvg('userReviews', 'rating')
+            ->withCount('userReviews')
+            ->get();
+
+        return view('home', [
+            'user' => Auth::user(),
+            'products' => $products,
+        ]);
     }
 }

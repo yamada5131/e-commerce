@@ -72,10 +72,10 @@
                     <tbody class="text-gray-700">
                         @foreach ($products as $product)
                             <tr>
-                                <td class="text-center py-2">{{ $product['id'] }}</td>
-                                <td class="text-center py-2">{{ $product['name'] }}</td>
-                                <td class="text-center py-2">{{ $product['price'] }}</td>
-                                <td class="text-center py-2">{{ $product['category'] }}</td>
+                                <td class="text-center py-2">{{ $product->id }}</td>
+                                <td class="text-center py-2">{{ $product->name }}</td>
+                                <td class="text-center py-2">{{ $product->price }}</td>
+                                <td class="text-center py-2">{{ $product->category->name }}</td>
                                 <td class="text-center py-2">
                                     <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Edit</button>
                                     <button class="px-3 py-1 bg-black text-white rounded-lg hover:bg-gray-700">Delete</button>
