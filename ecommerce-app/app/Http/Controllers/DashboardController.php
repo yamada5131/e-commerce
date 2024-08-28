@@ -44,7 +44,6 @@ class DashboardController extends Controller
                 break;
             case $sortAlphabet === 'za':
                 $products = $products->orderBy('name', 'DESC');
-
                 break;
             case $sortPrice === 'low-high':
                 $products = $products->orderBy('price', 'ASC');
