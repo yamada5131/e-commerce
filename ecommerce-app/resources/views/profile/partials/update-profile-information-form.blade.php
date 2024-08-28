@@ -53,8 +53,7 @@
             <x-input-label for="photo" :value="__('Avatar')" />
             <img style="height: 100px; width: 100px" src="{{asset("storage/" . $user->photo)}}"
                 class="card-img-top mt-4" alt="...">
-            <input class="mt-4 form-control-file" type="file" name="photo" id="photo" class="form-control-file"
-                required>
+            <input class="mt-4 form-control-file" type="file" name="photo" id="photo" class="form-control-file">
         </div>
 
         <div class="flex items-center gap-4">

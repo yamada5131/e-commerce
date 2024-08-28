@@ -6,8 +6,6 @@ use App\Models\UserReview;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 
-use Str;
-
 class UserReviewController extends Controller
 {
     /**
@@ -86,3 +84,8 @@ class UserReviewController extends Controller
         return redirect()->route("product.show", ["id" => $review_product_id])->with("success", "Review has been deleted!");
     }
 }
+
+
+
+
+

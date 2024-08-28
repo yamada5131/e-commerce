@@ -2,16 +2,24 @@
 
 namespace App\Models;
 
-use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 use Illuminate\Support\Str;
+
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Database\Eloquent\Relations\BelongsToMany;
 
 class ShoppingCart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ['*'];
+    protected $fillable = ["*"];
+
+    protected function casts(): array
+    {
+        return [
+            'id' => 'string',
+        ];
+    }
 
     public function products(): BelongsToMany
     {
@@ -29,3 +37,6 @@ class ShoppingCart extends Model
         });
     }
 }
+
+
+

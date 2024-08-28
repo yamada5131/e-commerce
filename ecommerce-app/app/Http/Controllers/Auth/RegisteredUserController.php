@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers\Auth;
 
-use App\Http\Controllers\Controller;
-use App\Http\Requests\RegisterRequest;
 use App\Models\User;
+
+use App\Http\Controllers\Controller;
+use App\Http\Controllers\ImageController;
+
+use App\Http\Requests\RegisterRequest;
 use Illuminate\Auth\Events\Registered;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -30,7 +33,6 @@ class RegisteredUserController extends Controller
     public function store(RegisterRequest $request): RedirectResponse
     {
         $request->authorize();
-        $imageUrl = $this->storeImage($request);
 
         $user = new User();
         $user->id = Str::uuid();
@@ -41,7 +43,15 @@ class RegisteredUserController extends Controller
         $user->password = Hash::make($request->password);
         $user->telephone = $request->telephone;
         $user->is_admin = false;
-        $user->photo = $imageUrl;
+
+        /*
+        if ($request->hasFile('photo')) {
+            $avatar = new ImageController();
+            $imageUrl = $avatar->storeImage($request, 'profile');
+            $user->photo = $imageUrl;
+        }
+        */
+
         $user->save();
 
         event(new Registered($user));
@@ -49,11 +59,5 @@ class RegisteredUserController extends Controller
         Auth::login($user);
 
         return redirect(route('dashboard.index', absolute: false));
-    }
-
-    protected function storeImage(RegisterRequest $request)
-    {
-        $path = $request->file('photo')->store('public/profile');
-        return substr($path, strlen('public/'));
     }
 }
