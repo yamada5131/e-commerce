@@ -3,20 +3,21 @@
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\Product;
-use App\Models\ShoppingCart;
-use Illuminate\Support\Str;
 
-return new class() extends Migration {
+return new class () extends Migration {
     /**
      * Run the migrations.
      */
     public function up(): void
     {
         Schema::create('shopping_cart_items', function (Blueprint $table) {
-            $table->uuid('id')->primary()->default(Str::uuid());
-            $table->foreignIdFor(ShoppingCart::class);
-            $table->foreignIdFor(Product::class);
+            $table->uuid('id')->primary();
+            $table->foreignUuid('shopping_cart_id')->references('id')->on('shopping_carts')->onUpdate('cascade')
+                ->onDelete('cascade');
+
+            $table->foreignUuid('product_id')->references('id')->on('products')->onUpdate('cascade')
+                ->onDelete('cascade');
+
             $table->integer('qty')->default(0);
             $table->timestamps();
         });

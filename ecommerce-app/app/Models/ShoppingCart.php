@@ -2,17 +2,16 @@
 
 namespace App\Models;
 
-use Illuminate\Support\Str;
-
-use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
-use Illuminate\Database\Eloquent\Relations\BelongsToMany;
+use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Support\Str;
 
 class ShoppingCart extends Model
 {
     use HasFactory;
 
-    protected $fillable = ["*"];
+    protected $fillable = ['*'];
 
     protected function casts(): array
     {
@@ -21,9 +20,14 @@ class ShoppingCart extends Model
         ];
     }
 
-    public function products(): BelongsToMany
+    // public function products(): BelongsToMany
+    // {
+    //     return $this->belongsToMany(Product::class, 'shopping_cart_items', 'shopping_cart_id', 'product_id');
+    // }
+
+    public function shoppingCartItems(): HasMany
     {
-        return $this->belongsToMany(Product::class, 'shopping_cart_items', 'shopping_cart_id', 'product_id');
+        return $this->hasMany(ShoppingCartItem::class);
     }
 
     public $incrementing = false;
@@ -37,6 +41,3 @@ class ShoppingCart extends Model
         });
     }
 }
-
-
-

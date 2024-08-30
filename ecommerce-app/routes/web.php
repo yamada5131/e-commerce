@@ -1,29 +1,28 @@
 <?php
 
+use App\Http\Controllers\CategoryController;
+use App\Http\Controllers\DashboardController;
+use App\Http\Controllers\HomeController;
+use App\Http\Controllers\OrderController;
+use App\Http\Controllers\ProductController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\UserReviewController;
 use App\Http\Middleware\CheckOwner;
-use App\Models\User;
-use Illuminate\Support\Facades\Route;
-use App\Http\Controllers\ProductController;
-
-// Rest of the code...
-
-use App\Http\Controllers\CategoryController;
-use App\Http\Controllers\DashboardController;
-use App\Http\Controllers\HomeController;
 use App\Models\Product;
 use App\Models\ProductCategory;
+use App\Models\User;
+use Illuminate\Support\Facades\Route;
 
 // Rest of the code...
 
 // Simulated feedback data
 
 Route::get('/', [HomeController::class, 'index'])->name('home.index');
+Route::get('/orders', [OrderController::class, 'index'])->name('orders.index');
 
 Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard.index');
-    
+
 // Profile management routes
 Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
@@ -31,7 +30,7 @@ Route::middleware('auth')->group(function () {
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
 });
 
-Route::middleware(['auth', 'admin'])->group(function (){
+Route::middleware(['auth', 'admin'])->group(function () {
     Route::get('/users', [UserController::class, 'index'])->name('users.index');
     Route::get('/users/create', [UserController::class, 'create'])->name('users.create');
     Route::get('/users/{user}', [UserController::class, 'show'])->name('users.show');
@@ -64,7 +63,7 @@ Route::middleware(['auth', 'admin'])->prefix('admin')->group(function () {
     Route::post('/products', [CategoryController::class, 'store'])->name('products.store');
     Route::get('/products/{product}/edit', [CategoryController::class, 'edit'])->name('products.edit');
     Route::put('/products/{product}', [CategoryController::class, 'update'])->name('products.update');
-    Route::delete('/products/{product}', [CategoryController::class, 'destroy'])->name('products.destroy');  
+    Route::delete('/products/{product}', [CategoryController::class, 'destroy'])->name('products.destroy');
 });
 
 Route::middleware(['auth'])->group(function () {
@@ -81,6 +80,3 @@ Route::get('/products', [CategoryController::class, 'index'])->name('products.in
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
 require __DIR__.'/auth.php';
-
-
-

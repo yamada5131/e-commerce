@@ -30,7 +30,7 @@ class AddressFactory extends Factory
             'address_line1' => fake()->streetAddress,
             'address_line2' => fake()->secondaryAddress,
             'city' => fake()->city,
-            'state/province' => fake()->state,
+            'state' => fake()->state,
             'postal_code' => fake()->postcode,
             'country_id' => Country::factory(),
             'is_default' => false,

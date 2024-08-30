@@ -2,9 +2,10 @@
 
 namespace App\Models;
 
+use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
-use Illuminate\Database\Eloquent\Factories\HasFactory;
+use Illuminate\Support\Str;
 
 class UserReview extends Model
 {
@@ -19,7 +20,7 @@ class UserReview extends Model
     ];
 
     protected $casts = [
-        'id' => 'string'
+        'id' => 'string',
     ];
 
     public function user(): BelongsTo
@@ -30,6 +31,17 @@ class UserReview extends Model
     public function orderItem(): BelongsTo
     {
         return $this->belongsTo(OrderItem::class, 'order_item_id');
+    }
+
+    public $incrementing = false;
+
+    protected $keyType = 'string';
+
+    public static function booted(): void
+    {
+        static::creating(function (UserReview $userReview) {
+            $userReview->id = Str::uuid();
+        });
     }
 }
 
