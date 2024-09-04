@@ -79,4 +79,4 @@ Route::middleware(['auth'])->group(function () {
 Route::get('/products', [CategoryController::class, 'index'])->name('products.index');
 Route::get('/products/{product}', [ProductController::class, 'show'])->name('products.show');
 
-require __DIR__.'/auth.php';
+require __DIR__ . '/auth.php';
